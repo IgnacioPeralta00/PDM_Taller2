@@ -1,2 +1,2 @@
-package com.pdm.fipr.foodspot.data.repositories
+package com.pdm.fipr.foodspot.data.repositories.restaurantRepository
 
