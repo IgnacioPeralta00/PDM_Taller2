@@ -46,7 +46,8 @@ import com.pdm.fipr.foodspot.screens.components.AppScaffold
 @Composable
 fun RestaurantsHomeScreen(
     viewModel: HomeViewModel = viewModel(),
-    onRestaurantClick: (id: Int) -> Unit
+    onRestaurantClick: (id: Int) -> Unit,
+    onSearchClick: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
@@ -66,7 +67,7 @@ fun RestaurantsHomeScreen(
     AppScaffold(
         title = "FoodSpot",
         actions = {
-            IconButton(onClick = {}) {
+            IconButton(onClick = onSearchClick) {
                 Icon(
                     imageVector = Icons.Default.Search,
                     contentDescription = "Search"

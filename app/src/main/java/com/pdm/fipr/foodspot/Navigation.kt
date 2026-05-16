@@ -11,6 +11,8 @@ import androidx.navigation3.ui.NavDisplay
 import com.pdm.fipr.foodspot.routes.Routes
 import com.pdm.fipr.foodspot.screens.detail.RestaurantsDetailScreen
 import com.pdm.fipr.foodspot.screens.home.RestaurantsHomeScreen
+import com.pdm.fipr.foodspot.screens.search.SearchRestaurantsScreen
+
 @Composable
 fun MainNavigation() {
     val backStack = rememberNavBackStack(Routes.Home)
@@ -23,7 +25,8 @@ fun MainNavigation() {
                 RestaurantsHomeScreen(
                     onRestaurantClick = { id ->
                         backStack.add(Routes.Detail(id))
-                    }
+                    },
+                    onSearchClick = { backStack.add(Routes.Search) }
                 )
             }
             entry<Routes.Detail> { entry ->
@@ -33,7 +36,12 @@ fun MainNavigation() {
                 )
             }
             entry<Routes.Search> {
-                Routes.Search
+                SearchRestaurantsScreen(
+                    onRestaurantClick = { id ->
+                        backStack.add(Routes.Detail(id))
+                    },
+                    navigateBack = { backStack.removeLastOrNull() }
+                )
             }
         },
         transitionSpec = {
