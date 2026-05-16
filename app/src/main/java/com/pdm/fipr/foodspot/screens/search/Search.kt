@@ -28,7 +28,7 @@ import com.pdm.fipr.foodspot.screens.components.AppScaffold
 import com.pdm.fipr.foodspot.screens.home.RestaurantCard
 
 @Composable
-fun SearchRestaurantsScreen(
+fun RestaurantSearchScreen(
     viewModel: SearchViewModel = viewModel(),
     onRestaurantClick: (Int) -> Unit,
     navigateBack: () -> Unit
