@@ -13,12 +13,10 @@ fun String.normalize(): String {
 
 class RestaurantApiRepository : RestaurantRepository {
     override suspend fun getRestaurants(): List<Restaurant> {
-        //delay(2000)
         return dummyRestaurants
     }
 
     override suspend fun getRestaurantById(id: Int): Restaurant? {
-        //delay(3000)
         return dummyRestaurants.find { it.id == id }
     }
 

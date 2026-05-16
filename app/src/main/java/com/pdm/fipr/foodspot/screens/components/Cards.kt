@@ -4,7 +4,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,7 +16,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
@@ -38,74 +36,6 @@ import coil3.compose.AsyncImage
 import com.pdm.fipr.foodspot.model.Dish
 import com.pdm.fipr.foodspot.model.Restaurant
 import com.pdm.fipr.foodspot.screens.home.ratingGenerator
-
-@Composable
-fun DishCard(
-    dish: Dish,
-    modifier: Modifier = Modifier,
-    onAddToCart: () -> Unit
-) {
-    OutlinedCard(
-        modifier = modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(12.dp),
-    ) {
-        Row(
-            modifier = Modifier
-                .padding(12.dp)
-                .fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            AsyncImage(
-                model = dish.imageUrl,
-                contentDescription = dish.name,
-                modifier = Modifier
-                    .size(90.dp)
-                    .clip(RoundedCornerShape(8.dp)),
-                contentScale = ContentScale.Crop
-            )
-
-            Spacer(modifier = Modifier.width(12.dp))
-
-            Column(
-                modifier = Modifier.weight(1f)
-            ) {
-                Text(
-                    text = dish.name,
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
-                Text(
-                    text = dish.description,
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    maxLines = 2,
-                    overflow = TextOverflow.Ellipsis,
-                    lineHeight = 16.sp
-                )
-
-                Spacer(modifier = Modifier.height(8.dp))
-
-                Button(
-                    onClick = onAddToCart,
-                    shape = RoundedCornerShape(8.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.primary,
-                    ),
-                    modifier = Modifier.height(36.dp),
-                    contentPadding = PaddingValues(horizontal = 12.dp, vertical = 0.dp)
-                ) {
-                    Text(
-                        text = "+ Agregar",
-                        style = MaterialTheme.typography.labelLarge,
-                        fontWeight = FontWeight.Bold
-                    )
-                }
-            }
-        }
-    }
-}
 
 @Composable
 fun RestaurantCard(
@@ -181,5 +111,89 @@ fun RestaurantCard(
                 )
             }
         }
+    }
+}
+
+@Composable
+fun HorizontalInfoCard(
+    imageUrl: String,
+    title: String,
+    description: String,
+    modifier: Modifier = Modifier,
+    onClick: (() -> Unit)? = null, // Si es nulo, la tarjeta no es clickeable
+    bottomContent: @Composable () -> Unit = {}
+) {
+    OutlinedCard(
+        modifier = modifier
+            .fillMaxWidth()
+            .then(if (onClick != null) Modifier.clickable { onClick() } else Modifier),
+        shape = RoundedCornerShape(12.dp)
+    ) {
+        Row(
+            modifier = Modifier.padding(12.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            AsyncImage(
+                model = imageUrl,
+                contentDescription = null,
+                modifier = Modifier.size(90.dp).clip(RoundedCornerShape(8.dp)),
+                contentScale = ContentScale.Crop
+            )
+
+            Spacer(modifier = Modifier.width(16.dp))
+
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text = title,
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+                Text(
+                    text = description,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis
+                )
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                bottomContent()
+            }
+        }
+    }
+}
+
+@Composable
+fun DishCard(
+    dish: Dish,
+    onAddToCart: () -> Unit,
+) {
+    HorizontalInfoCard(
+        imageUrl = dish.imageUrl,
+        title = dish.name,
+        description = dish.description
+    ) {
+        Button(onClick = onAddToCart, modifier = Modifier.height(36.dp)) {
+            Text("+ Agregar")
+        }
+    }
+}
+
+@Composable
+fun RestaurantSearchCard(restaurant: Restaurant, onClick: (id: Int) -> Unit) {
+    HorizontalInfoCard(
+        imageUrl = restaurant.imageUrl,
+        title = restaurant.name,
+        description = restaurant.description,
+        onClick = { onClick(restaurant.id) }
+    ) {
+        Text(
+            text = restaurant.categories.joinToString(" • "),
+            style = MaterialTheme.typography.labelSmall,
+            color = MaterialTheme.colorScheme.primary
+        )
     }
 }

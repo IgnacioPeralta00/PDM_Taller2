@@ -84,27 +84,26 @@ fun RestaurantsDetailScreen(
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(innerPadding),
+                .padding(innerPadding)
+                .padding(horizontal = 16.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             item {
                 Text(
                     text = restaurant?.description ?: "Sin descripción",
                     style = MaterialTheme.typography.bodyMedium,
-                    modifier = Modifier.padding(16.dp),
+                    modifier = Modifier.padding(vertical = 16.dp),
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
                 Text(
                     text = "Menú",
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
                 )
             }
             items(restaurant?.menu ?: emptyList()) { dish ->
                 DishCard(
                     dish = dish,
-                    modifier = Modifier.padding(horizontal = 16.dp),
                     onAddToCart = {
                         scope.launch {
                             snackBarHostState.showSnackbar("${dish.name} agregado al carrito")

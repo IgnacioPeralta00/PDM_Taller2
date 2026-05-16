@@ -25,7 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.pdm.fipr.foodspot.screens.components.AppScaffold
-import com.pdm.fipr.foodspot.screens.components.RestaurantCard
+import com.pdm.fipr.foodspot.screens.components.RestaurantSearchCard
 
 @Composable
 fun RestaurantSearchScreen(
@@ -67,7 +67,7 @@ fun RestaurantSearchScreen(
                     contentPadding = PaddingValues(16.dp)
                 ) {
                     items(uiState.restaurants) { restaurant ->
-                        RestaurantCard(restaurant, onRestaurantClick)
+                        RestaurantSearchCard(restaurant, onRestaurantClick)
                     }
                 }
             }
