@@ -11,7 +11,6 @@ import androidx.navigation3.ui.NavDisplay
 import com.pdm.fipr.foodspot.routes.Routes
 import com.pdm.fipr.foodspot.screens.detail.RestaurantsDetailScreen
 import com.pdm.fipr.foodspot.screens.home.RestaurantsHomeScreen
-
 @Composable
 fun MainNavigation() {
     val backStack = rememberNavBackStack(Routes.Home)

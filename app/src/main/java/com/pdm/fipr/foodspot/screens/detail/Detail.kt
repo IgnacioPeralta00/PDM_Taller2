@@ -1,5 +1,6 @@
 package com.pdm.fipr.foodspot.screens.detail
 
+import android.content.Context
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -32,7 +33,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -42,6 +42,12 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import coil3.compose.AsyncImage
 import com.pdm.fipr.foodspot.model.Dish
 import com.pdm.fipr.foodspot.screens.components.AppScaffold
+import android.widget.Toast
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.platform.LocalContext
+import kotlinx.coroutines.launch
 
 @Composable
 fun RestaurantsDetailScreen(
@@ -50,6 +56,9 @@ fun RestaurantsDetailScreen(
     navigateBack: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
+    val restaurant = uiState.restaurant
+    val snackBarHostState = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
 
     LaunchedEffect(id) {
         viewModel.loadRestaurant(id)
@@ -78,8 +87,6 @@ fun RestaurantsDetailScreen(
         return
     }
 
-    val restaurant = uiState.restaurant
-
     AppScaffold(
         title = restaurant?.name ?: "FoodSpot",
         navigationIcon = {
@@ -89,7 +96,8 @@ fun RestaurantsDetailScreen(
                     contentDescription = "Back"
                 )
             }
-        }
+        },
+        snackBarHostState = snackBarHostState
     ) { innerPadding ->
         LazyColumn(
             modifier = Modifier
@@ -114,7 +122,12 @@ fun RestaurantsDetailScreen(
             items(restaurant?.menu ?: emptyList()) { dish ->
                 DishCard(
                     dish = dish,
-                    modifier = Modifier.padding(horizontal = 16.dp)
+                    modifier = Modifier.padding(horizontal = 16.dp),
+                    onAddToCart = {
+                        scope.launch {
+                            snackBarHostState.showSnackbar("${dish.name} agregado al carrito")
+                        }
+                    }
                 )
             }
             item {
@@ -127,7 +140,8 @@ fun RestaurantsDetailScreen(
 @Composable
 fun DishCard(
     dish: Dish,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onAddToCart: () -> Unit
 ) {
     OutlinedCard(
         modifier = modifier.fillMaxWidth(),
@@ -172,7 +186,7 @@ fun DishCard(
                 Spacer(modifier = Modifier.height(8.dp))
 
                 Button(
-                    onClick = { /* TODO: Lógica para agregar */ },
+                    onClick = onAddToCart,
                     shape = RoundedCornerShape(8.dp),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = MaterialTheme.colorScheme.primary,
