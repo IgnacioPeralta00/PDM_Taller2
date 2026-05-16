@@ -1,5 +1,6 @@
 package com.pdm.fipr.foodspot.screens.detail
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
@@ -28,6 +29,7 @@ import com.pdm.fipr.foodspot.screens.components.AppScaffold
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.platform.LocalContext
 import com.pdm.fipr.foodspot.screens.components.DishCard
 import kotlinx.coroutines.launch
 
@@ -41,6 +43,7 @@ fun RestaurantsDetailScreen(
     val restaurant = uiState.restaurant
     val snackBarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
+    val context = LocalContext.current
 
     LaunchedEffect(id) {
         viewModel.loadRestaurant(id)
@@ -105,9 +108,10 @@ fun RestaurantsDetailScreen(
                 DishCard(
                     dish = dish,
                     onAddToCart = {
-                        scope.launch {
+                        Toast.makeText(context, "${dish.name} agregado", Toast.LENGTH_SHORT).show()
+                        /*scope.launch {
                             snackBarHostState.showSnackbar("${dish.name} agregado al carrito")
-                        }
+                        }*/
                     }
                 )
             }
