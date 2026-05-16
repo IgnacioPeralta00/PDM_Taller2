@@ -29,8 +29,8 @@ class RestaurantApiRepository : RestaurantRepository {
         val normalizedQuery = query.normalize()
 
         return dummyRestaurants.filter { restaurant ->
-            val matchesName = restaurant.name.lowercase().contains(normalizedQuery)
-            val matchesDish = restaurant.menu.any { dish -> dish.name.lowercase().contains(normalizedQuery) }
+            val matchesName = restaurant.name.normalize().contains(normalizedQuery)
+            val matchesDish = restaurant.menu.any { dish -> dish.name.normalize().contains(normalizedQuery) }
             matchesName || matchesDish
         }
     }
