@@ -1,6 +1,7 @@
 package com.pdm.fipr.foodspot.screens.components
 
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
@@ -27,6 +28,7 @@ fun AppScaffold(
     modifier: Modifier = Modifier,
     title: String = "",
     navigationIcon: @Composable (() -> Unit)? = null,
+    actions: @Composable RowScope.() -> Unit = {},
     bottomBarText: String? = null,
     onFabClick: (() -> Unit)? = null,
     fabIcon: @Composable (() -> Unit)? = null,
@@ -44,7 +46,8 @@ fun AppScaffold(
                         titleContentColor = MaterialTheme.colorScheme.primary,
                     ),
                     title = { Text(title) },
-                    navigationIcon = { navigationIcon?.invoke() }
+                    navigationIcon = { navigationIcon?.invoke() },
+                    actions = actions
                 )
             }
         },

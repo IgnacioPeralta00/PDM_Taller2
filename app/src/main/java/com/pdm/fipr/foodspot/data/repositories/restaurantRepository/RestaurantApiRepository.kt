@@ -16,8 +16,18 @@ class RestaurantApiRepository : RestaurantRepository {
     }
 
     override suspend fun searchRestaurants(query: String): List<Restaurant> {
-        TODO("Not yet implemented")
+
+        if (query.isEmpty()) return emptyList()
+
+        val lowerCaseQuery = query.lowercase()
+
+        return dummyRestaurants.filter { restaurant ->
+            val matchesName = restaurant.name.lowercase().contains(lowerCaseQuery)
+            val matchesDish = restaurant.menu.any { dish -> dish.name.lowercase().contains(lowerCaseQuery) }
+            matchesName || matchesDish
+        }
     }
+
 
     override suspend fun getCategories(): List<String> {
         return dummyRestaurants.flatMap { it.categories }.distinct()
