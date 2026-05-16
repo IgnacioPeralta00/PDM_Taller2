@@ -27,6 +27,10 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.pdm.fipr.foodspot.screens.components.AppScaffold
 import com.pdm.fipr.foodspot.screens.components.RestaurantCard
 
+fun ratingGenerator(): String {
+    val rating = (20..50).random() / 10.0
+    return "%.1f".format(rating)
+}
 @Composable
 fun RestaurantsHomeScreen(
     viewModel: HomeViewModel = viewModel(),
@@ -88,11 +92,5 @@ fun RestaurantsHomeScreen(
             }
         }
     }
-}
-
-fun ratingGenerator(): String {
-    val intRange = (2..5).random()
-    val doubleRange = (0..9).random()
-    return "$intRange.$doubleRange"
 }
 

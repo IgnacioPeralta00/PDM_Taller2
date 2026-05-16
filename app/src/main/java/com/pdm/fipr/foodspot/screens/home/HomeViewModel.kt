@@ -31,8 +31,8 @@ class HomeViewModel: ViewModel() {
             val groupedRestaurants = categories.associateWith { category ->
                 restaurants.filter { it.categories.contains(category) }
             }
-            _uiState.update {
-                it.copy(
+            _uiState.update { state ->
+                state.copy(
                     categoriesAndRestaurants = groupedRestaurants,
                     loading = false
                 )
