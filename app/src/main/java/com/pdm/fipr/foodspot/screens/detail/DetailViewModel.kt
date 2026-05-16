@@ -22,6 +22,7 @@ class DetailViewModel: ViewModel()  {
 
 
     fun loadRestaurant(id: Int) {
+        _uiState.update { it.copy(restaurant = null, loading = true) }
         viewModelScope.launch {
             val restaurant = repository.getRestaurantById(id)
             _uiState.update {

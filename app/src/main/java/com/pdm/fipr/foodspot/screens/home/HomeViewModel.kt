@@ -29,7 +29,7 @@ class HomeViewModel: ViewModel() {
             val restaurants = repository.getRestaurants()
             val categories = repository.getCategories()
             val groupedRestaurants = categories.associateWith { category ->
-                restaurants.filter { it.categories.contains(category) }
+                restaurants.filter { restaurant -> restaurant.categories.contains(category) }
             }
             _uiState.update { state ->
                 state.copy(
