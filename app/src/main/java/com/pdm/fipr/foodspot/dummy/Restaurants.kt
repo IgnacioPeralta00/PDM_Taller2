@@ -13,7 +13,7 @@ val dummyRestaurants = listOf(
         menu = listOf(
             Dish(1, "Pizza Margherita", "Tomate San Marzano, mozzarella de búfala y albahaca fresca.", "https://plus.unsplash.com/premium_photo-1679924471066-dd984e92f395?q=80&w=764&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"),
             Dish(2, "Pizza Pepperoni", "Mozzarella y abundante pepperoni crujiente.", "https://images.unsplash.com/photo-1628840042765-356cda07504e"),
-            Dish(3, "Calzone Tradicional", "Pizza cerrada rellena de ricotta, jamón y queso.", "https://images.unsplash.com/photo-1627308595229-7830a5c91f9f")
+            Dish(3, "Calzone Tradicional", "Pizza cerrada rellena de ricotta, jamón y queso.", "https://images.unsplash.com/photo-1753656681797-3234c89d6d4d?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")
         )
     ),
     Restaurant(

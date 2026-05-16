@@ -1,17 +1,24 @@
 package com.pdm.fipr.foodspot.data.repositories.restaurantRepository
 
+import java.text.Normalizer
 import com.pdm.fipr.foodspot.dummy.dummyRestaurants
 import com.pdm.fipr.foodspot.model.Restaurant
-import kotlinx.coroutines.delay
+
+fun String.normalize(): String {
+    val temp = Normalizer.normalize(this, Normalizer.Form.NFD)
+    return Regex("\\p{InCombiningDiacriticalMarks}+")
+        .replace(temp, "")
+        .lowercase()
+}
 
 class RestaurantApiRepository : RestaurantRepository {
     override suspend fun getRestaurants(): List<Restaurant> {
-        delay(2000)
+        //delay(2000)
         return dummyRestaurants
     }
 
     override suspend fun getRestaurantById(id: Int): Restaurant? {
-        delay(3000)
+        //delay(3000)
         return dummyRestaurants.find { it.id == id }
     }
 
@@ -19,11 +26,11 @@ class RestaurantApiRepository : RestaurantRepository {
 
         if (query.isEmpty()) return emptyList()
 
-        val lowerCaseQuery = query.lowercase()
+        val normalizedQuery = query.normalize()
 
         return dummyRestaurants.filter { restaurant ->
-            val matchesName = restaurant.name.lowercase().contains(lowerCaseQuery)
-            val matchesDish = restaurant.menu.any { dish -> dish.name.lowercase().contains(lowerCaseQuery) }
+            val matchesName = restaurant.name.lowercase().contains(normalizedQuery)
+            val matchesDish = restaurant.menu.any { dish -> dish.name.lowercase().contains(normalizedQuery) }
             matchesName || matchesDish
         }
     }
