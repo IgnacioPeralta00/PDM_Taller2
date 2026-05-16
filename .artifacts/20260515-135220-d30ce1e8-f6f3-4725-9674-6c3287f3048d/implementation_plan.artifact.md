@@ -1,24 +1,27 @@
-# Update Restaurant Data
+# Implement DishCard Component
 
-Update the dummy data in `Restaurants.kt` to include 10 restaurants, ensuring categories are defined as strings within each restaurant and images use public URLs.
+Create the `DishCard` component for the restaurant detail screen based on the provided reference image.
 
 ## User Review Required
 
-- **Category Definition**: Categories will be written as literal Strings in each `Restaurant` object instead of referencing an external map.
+- **Design Fidelity**: The card will feature a horizontal layout with an image on the left, title and description in the center/top, and an "Agregar" button at the bottom right of the text area.
+- **Interactivity**: The "+ Agregar" button will be a `Button` with a filled background, matching the visual style.
 
 ## Proposed Changes
 
-### Data Layer
+### Detail Screen
 
-#### [Restaurants.kt](file:///C:/Users/Peral/Documents/PDM2026/Talleres/PDM_Taller2/app/src/main/java/com/pdm/fipr/foodspot/dummy/Restaurants.kt)
+#### [Detail.kt](file:///C:/Users/Peral/Documents/PDM2026/Talleres/PDM_Taller2/app/src/main/java/com/pdm/fipr/foodspot/screens/detail/Detail.kt)
 
-- I will populate `dummyRestaurants` with 10 restaurant instances.
-- Each restaurant will have at least 4 different categories distributed across the list.
-- Each restaurant will contain at least 3 dishes.
-- All images will use public Unsplash URLs.
+- Implement the `DishCard` composable:
+    - Use `OutlinedCard` for the thin border look shown in the image.
+    - `Row` layout for image and text content.
+    - `AsyncImage` for the dish photo (80dp-100dp square).
+    - `Column` for the Title, Description, and the "Agregar" button.
+- Integrate `DishCard` into the `RestaurantsDetailScreen`'s `LazyColumn`.
 
 ## Verification Plan
 
 ### Manual Verification
-- Verify that the code compiles and the `dummyRestaurants` list contains exactly 10 items.
-- Check that categories are distributed and dishes meet the minimum requirement.
+- Verify the layout of `DishCard` matches the provided image using a Compose Preview.
+- Ensure the detail screen correctly displays the list of dishes.

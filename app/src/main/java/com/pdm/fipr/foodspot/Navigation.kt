@@ -9,6 +9,8 @@ import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
 import com.pdm.fipr.foodspot.routes.Routes
+import com.pdm.fipr.foodspot.screens.detail.RestaurantsDetailScreen
+import com.pdm.fipr.foodspot.screens.home.RestaurantsHomeScreen
 
 @Composable
 fun MainNavigation() {
@@ -17,7 +19,24 @@ fun MainNavigation() {
     NavDisplay(
         backStack = backStack,
         onBack = { backStack.removeLastOrNull() },
-        entryProvider = entryProvider {},
+        entryProvider = entryProvider {
+            entry<Routes.Home> {
+                RestaurantsHomeScreen(
+                    onRestaurantClick = { id ->
+                        backStack.add(Routes.Detail(id))
+                    }
+                )
+            }
+            entry<Routes.Detail> { entry ->
+                RestaurantsDetailScreen(
+                    entry.id,
+                    navigateBack = { backStack.removeLastOrNull() }
+                )
+            }
+            entry<Routes.Search> {
+                Routes.Search
+            }
+        },
         transitionSpec = {
             slideInHorizontally(
                 initialOffsetX = { it },
